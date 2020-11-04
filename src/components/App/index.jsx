@@ -21,6 +21,7 @@ const App = () => {
       })
         .then(response => {
           setUserInfo(response.data)
+          setDetectedTextStatus(true);
           console.log(response.data);
         })
         .catch(err => console.log('following error white trying to post: ', err));
