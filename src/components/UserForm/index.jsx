@@ -28,7 +28,7 @@ const UserForm = (props) => {
         value: e.target.value
       })}}/><br/><br/>
 
-      <Button variant="contained" color="secondary">Submit</Button>
+      <Button onClick={() => {props.handleSuccess()}} variant="contained" color="secondary">Submit</Button>
 
     </div>
   )

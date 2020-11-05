@@ -4,6 +4,7 @@ import ImageUpload from '../ImageUpload';
 import UserForm from '../UserForm';
 import axios from 'axios';
 import SearchAppBar from '../AppBar';
+import Success from '../Success';
 
 const App = () => {
   const [image, setImage] = React.useState(() => '');
@@ -14,6 +15,7 @@ const App = () => {
   const [licenseNo, setLicenseNo] = React.useState('');
   const [issueDate, setIssueDate] = React.useState('');
   const [expirationDate, setExpirationDate] = React.useState('');
+  const [successStatus, setSuccessStatus] = React.useState(false);
 
   React.useEffect(() => {
     if (image !== '') {
@@ -45,6 +47,10 @@ const App = () => {
     console.log(e.target.files[0]);
   }
 
+  const handleSuccess  = (e) => {
+    setSuccessStatus(true);
+  }
+
   const handleFormChange = (data) => {
     if (data.id==='name') {
       setName(data.value);
@@ -59,27 +65,28 @@ const App = () => {
     }
   }
 
-  // let component;
-  // if (detectedTextStatus === false) {
-  //   component = <ImageUpload handleSubmit={handleSubmit} />
-  // } else if (detectedTextStatus === true) {
-  //   component = <div>Success</div>
-  // }
+  let component;
+  if (successStatus === false) {
+    component = <div id="container">
+                  <ImageUpload handleSubmit={handleSubmit} />
+                  <UserForm
+                    handleFormChange={handleFormChange}
+                    name={name}
+                    dateOfBirth={dateOfBirth}
+                    licenseNo={licenseNo}
+                    issueDate={issueDate}
+                    expirationDate={expirationDate}
+                    handleSuccess={handleSuccess}
+                    />
+                </div>
+  } else if (successStatus === true) {
+    component = <div id="success"><Success /></div>
+  }
 
   return (
     <div id="page">
       <SearchAppBar />
-      <div id="container">
-        <ImageUpload handleSubmit={handleSubmit} />
-        <UserForm
-          handleFormChange={handleFormChange}
-          name={name}
-          dateOfBirth={dateOfBirth}
-          licenseNo={licenseNo}
-          issueDate={issueDate}
-          expirationDate={expirationDate}
-          />
-      </div>
+      {component}
     </div>
   )
 }
