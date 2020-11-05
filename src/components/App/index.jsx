@@ -1,12 +1,18 @@
 import React from 'react';
 import './style.css';
 import ImageUpload from '../ImageUpload';
+import UserForm from '../UserForm';
 import axios from 'axios';
 
 const App = () => {
   const [image, setImage] = React.useState(() => '');
   const [detectedTextStatus, setDetectedTextStatus] = React.useState(false);
   const [userInfo, setUserInfo] = React.useState({});
+  const [name, setName] = React.useState('');
+  const [dateOfBirth, setDateOfBirth] = React.useState('');
+  const [licenseNo, setLicenseNo] = React.useState('');
+  const [issueDate, setIssueDate] = React.useState('');
+  const [expirationDate, setExpirationDate] = React.useState('');
 
   React.useEffect(() => {
     if (image !== '') {
@@ -20,7 +26,12 @@ const App = () => {
         data: formData
       })
         .then(response => {
-          setUserInfo(response.data)
+          setUserInfo(response.data);
+          setName(response.data.name);
+          setDateOfBirth(response.data.dateOfBirth);
+          setLicenseNo(response.data.licenseNo);
+          setIssueDate(response.data.issueDate);
+          setExpirationDate(response.data.expireDate);
           setDetectedTextStatus(true);
           console.log(response.data);
         })
@@ -33,17 +44,39 @@ const App = () => {
     console.log(e.target.files[0]);
   }
 
-  let component;
-  if (detectedTextStatus === false) {
-    component = <ImageUpload handleSubmit={handleSubmit} />
-  } else if (detectedTextStatus === true) {
-    component = <div>Success</div>
+  const handleFormChange = (data) => {
+    if (data.id==='name') {
+      setName(data.value);
+    } else if (data.id === 'dateOfBirth') {
+      setDateOfBirth(data.value);
+    } else if (data.id === 'licenseNo') {
+      setLicenseNo(data.value);
+    } else if (data.id === 'issueDate') {
+      setIssueDate(data.value);
+    } else if (data.id === 'expirationDate') {
+      setExpirationDate(data.value)
+    }
   }
 
+  // let component;
+  // if (detectedTextStatus === false) {
+  //   component = <ImageUpload handleSubmit={handleSubmit} />
+  // } else if (detectedTextStatus === true) {
+  //   component = <div>Success</div>
+  // }
+
   return (
-    <>
-    {component}
-    </>
+    <div id="container">
+      <ImageUpload handleSubmit={handleSubmit} />
+      <UserForm
+        handleFormChange={handleFormChange}
+        name={name}
+        dateOfBirth={dateOfBirth}
+        licenseNo={licenseNo}
+        issueDate={issueDate}
+        expirationDate={expirationDate}
+      />
+    </div>
   )
 }
 
