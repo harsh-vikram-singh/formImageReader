@@ -6,6 +6,7 @@ const UserForm = (props) => {
 
   return (
     <div>
+      <p>Please provide following information to proceed:</p>
       <TextField id="name" label="Name" variant="outlined" value={props.name} onChange={(e) => {props.handleFormChange({
         id: e.target.id,
         value: e.target.value
@@ -26,6 +27,8 @@ const UserForm = (props) => {
         id: e.target.id,
         value: e.target.value
       })}}/><br/><br/>
+
+      <Button variant="contained" color="secondary">Submit</Button>
 
     </div>
   )

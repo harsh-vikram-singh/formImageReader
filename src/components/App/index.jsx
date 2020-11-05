@@ -3,6 +3,7 @@ import './style.css';
 import ImageUpload from '../ImageUpload';
 import UserForm from '../UserForm';
 import axios from 'axios';
+import SearchAppBar from '../AppBar';
 
 const App = () => {
   const [image, setImage] = React.useState(() => '');
@@ -66,16 +67,19 @@ const App = () => {
   // }
 
   return (
-    <div id="container">
-      <ImageUpload handleSubmit={handleSubmit} />
-      <UserForm
-        handleFormChange={handleFormChange}
-        name={name}
-        dateOfBirth={dateOfBirth}
-        licenseNo={licenseNo}
-        issueDate={issueDate}
-        expirationDate={expirationDate}
-      />
+    <div id="page">
+      <SearchAppBar />
+      <div id="container">
+        <ImageUpload handleSubmit={handleSubmit} />
+        <UserForm
+          handleFormChange={handleFormChange}
+          name={name}
+          dateOfBirth={dateOfBirth}
+          licenseNo={licenseNo}
+          issueDate={issueDate}
+          expirationDate={expirationDate}
+          />
+      </div>
     </div>
   )
 }
